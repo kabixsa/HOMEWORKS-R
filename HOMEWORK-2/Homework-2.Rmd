@@ -1,0 +1,57 @@
+---
+title: "HomeWork-2"
+output: html_notebook
+---
+
+This is an [R Markdown](http://rmarkdown.rstudio.com) Notebook. When you execute code within the notebook, the results appear beneath the code. 
+
+Try executing this chunk by clicking the *Run* button within the chunk or by placing your cursor inside it and pressing *Ctrl+Shift+Enter*. 
+
+```{r}
+# Karen Bibiana Ixcoy Sánchez
+#Estructura de una función
+#Una función en R se define utilizando la palabra clave function. La estructura básica de una función en R es la siguiente:
+
+nombre_funcion <- function(argumentos) {
+  # Código de la función
+  # ...
+  return(resultado)
+}
+
+#Ejemplo de una función
+sumar <- function(a, b) {
+  resultado <- a + b
+  return(resultado)
+}
+# Argumentos de una función
+# Los argumentos en una función son las variables que se utilizan para pasar valores a la función. Pueden ser de dos tipos: argumentos posicionales y argumentos con nombre. Los argumentos posicionales se definen en el orden en que se pasan a la función, mientras que los argumentos con nombre se definen utilizando el nombre del argumento seguido de un signo de igual (=).
+
+# Argumentos por valor
+# En R, los argumentos de una función se pasan por valor, lo que significa que se crea una copia de los valores originales y se utiliza esa copia dentro de la función. Esto implica que los cambios realizados a los argumentos dentro de la función no afectan a las variables originales fuera de la función.
+
+# FAMILIA APPLY
+# LAPPLY
+# lapply es una función en R que se utiliza para aplicar una función a cada elemento de una lista o vector. Devuelve una lista con los resultados de aplicar la función a cada elemento.
+
+# Ejemplo de lappy
+numeros <- list(1, 2, 3, 4, 5)
+cuadrados <- lapply(numeros, function(x) x^2)
+
+# SAPPLY
+# sapply es una versión simplificada de lapply. A diferencia de lapply, sapply intenta simplificar el resultado a un vector, matriz o array si es posible.
+
+# Ejemplo de uso de sapply
+numeros <- list(1, 2, 3, 4, 5)
+cuadrados <- sapply(numeros, function(x) x^2)
+
+# VAPPLY
+# vapply es similar a sapply, pero permite especificar el tipo de valor que se espera como resultado. Esto puede ser útil cuando se desea asegurar que el resultado tenga un tipo de dato específico.
+
+# Ejemplo de uso de vapply
+numeros <- c(1, 2, 3, 4, 5)
+cuadrados <- vapply(numeros, function(x) x^2, numeric(1))
+
+
+
+```
+
