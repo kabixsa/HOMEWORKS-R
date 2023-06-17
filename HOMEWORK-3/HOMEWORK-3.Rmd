@@ -1,48 +1,31 @@
 ---
-title: "R Notebook"
+title: "Homework-3"
 output: html_notebook
-
-
-
 ---
 
-
 ```{r}
-# Instalar y cargar la paquetería dplyr
-install.packages("dplyr")
-library(dplyr)
+#Homework-3 Karen Ixcoy
+dataset_results <- read.csv("primary_results.csv", stringsAsFactors = FALSE)
 
-# Leer el archivo CSV y asignarlo a la variable dataset_results
-dataset_results <- read.csv("primary_results.csv")
+# Filtrando todos los votos del estado de Florida
+filtro_florida <- filter(dataset_results, state == "Florida")
 
-# Ejercicio 1: Filtrar todos los votos del estado de Florida
-florida_votes <- filter(dataset_results, state == "Florida")
+# Filtrando votos para los candidatos Hillary Clinton o Donald Trump
+filtro_candidatos <- filter(dataset_results, candidate %in% c("Hillary Clinton", "Donald Trump"))
 
-# Ejercicio 2.1: Filtrar votos para los candidatos Hillary Clinton o Donald Trump
-clinton_trump_votes <- filter(dataset_results, candidate %in% c("Hillary Clinton", "Donald Trump"))
+# Filtrando votos para el partido Demócrata y el condado Shelby en el estado de Alabama
+filtro_democrata_shelby_alabama <- filter(dataset_results, party == "Democrat" & county == "Shelby" & state == "Alabama" & votes > 15000)
 
-# Ejercicio 2.2: Filtrar votos para el partido Demócrata y el condado Shelby
-democrat_shelby_votes <- filter(dataset_results, party == "Democrat" & county == "Shelby")
-
-# Ejercicio 2.3: Filtrar votos para el estado de Alabama y cantidad de votos mayor a 15000
-alabama_votes <- filter(dataset_results, state == "Alabama" & votes > 15000)
-
-# Ejercicio 3.1: Filtrar votos para el estado de Texas y el condado Denton,
-# seleccionando únicamente las columnas party, candidate y votes,
-# y ordenar de forma descendente por la columna votes
-texas_denton_votes <- dataset_results %>%
+# Filtrando votos para el estado de Texas y el condado Denton
+filtro_texas_denton <- dataset_results %>%
   filter(state == "Texas" & county == "Denton") %>%
   select(party, candidate, votes) %>%
   arrange(desc(votes))
 
-# Ejercicio 4.1: Filtrar por el partido Republicano, candidato Ted Cruz en el estado de Alaska,
-# agregar una columna vote_count como votes/fraction_votes,
-# y ordenar de forma descendente por vote_count
-alaska_republican_votes <- dataset_results %>%
+# Filtrando por el partido Republicano, candidato Ted Cruz en el estado de Alaska,ordenando por de forma descendente
+filtro_republicano_alaska <- dataset_results %>%
   filter(party == "Republican" & candidate == "Ted Cruz" & state == "Alaska") %>%
   mutate(vote_count = votes / fraction_votes) %>%
   arrange(desc(vote_count))
-
-
 ```
 
