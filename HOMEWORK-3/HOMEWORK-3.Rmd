@@ -5,6 +5,15 @@ output: html_notebook
 
 ```{r}
 #Homework-3 Karen Ixcoy
+
+#Para leer un archivo CSV en R, puedes utilizar la función read.csv(). Esta función carga los datos de un archivo CSV en un data frame en R. se utiliza este comando:
+#dataset <- read.csv("archivo.csv")
+#con la ruta y el nombre del archivo CSV que uno desee leer. Hay que asegúrarse de que el archivo CSV se encuentre en el directorio de trabajo.
+
+#La función select() es parte de la paquetería dplyr, que proporciona una sintaxis intuitiva para manipular y transformar datos en R. La función select() se utiliza para seleccionar columnas específicas de un data frame.
+
+
+
 dataset_results <- read.csv("primary_results.csv", stringsAsFactors = FALSE)
 
 # Filtrando todos los votos del estado de Florida
@@ -27,5 +36,7 @@ filtro_republicano_alaska <- dataset_results %>%
   filter(party == "Republican" & candidate == "Ted Cruz" & state == "Alaska") %>%
   mutate(vote_count = votes / fraction_votes) %>%
   arrange(desc(vote_count))
+
+
 ```
 
