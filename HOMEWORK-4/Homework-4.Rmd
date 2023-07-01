@@ -31,4 +31,33 @@ print(hist_plot)
 hist_log_plot <- hist_plot + scale_x_log10()
 print(hist_log_plot)
 
+#Paso 3
+boxplot_plot <- ggplot(diamonds, aes(x = cut, y = price)) +
+  geom_boxplot() +
+  scale_y_log10()
+print(boxplot_plot)
+
+
+boxplot_color <- boxplot_plot + aes(fill = cut)
+print(boxplot_color)
+
+
+filtered_price <- diamonds %>%
+  filter(price > 1000 & cut %in% c("Good", "Ideal", "Premium"))
+
+#Grafico de barras
+bar_plot <- ggplot(filtered_price, aes(x = cut, y = depth)) +
+  geom_bar(stat = "identity")
+print(bar_plot)
+
+
+facet_plot <- bar_plot + facet_wrap(~ clarity)
+print(facet_plot)
+
+
+facet_plot_fill <- facet_plot + aes(fill = clarity)
+print(facet_plot_fill)
+
+
+
 ```
