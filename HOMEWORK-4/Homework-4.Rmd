@@ -1,0 +1,34 @@
+---
+title: "Homework-4"
+output: html_notebook
+---
+
+ 
+
+```{r}
+#Homework-4
+#Karen Bibiana Ixcoy Sanchez
+
+diamonds <- read.csv("diamonds.csv")
+str(diamonds)
+
+# Gráfico de dispersión carat vs price
+library(ggplot2)
+scatter_plot <- ggplot(diamonds, aes(x = carat, y = price)) +
+  geom_point()
+print(scatter_plot)
+
+# Mapeando color con la variable clarity
+scatter_plot_color <- scatter_plot + aes(color = clarity)
+print(scatter_plot_color)
+
+#Histograma
+hist_plot <- ggplot(diamonds, aes(x = price)) +
+  geom_histogram(bins = 40)
+print(hist_plot)
+
+#Escala logarítmica
+hist_log_plot <- hist_plot + scale_x_log10()
+print(hist_log_plot)
+
+```
