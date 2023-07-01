@@ -9,11 +9,15 @@ output: html_notebook
 #Homework-4
 #Karen Bibiana Ixcoy Sanchez
 
+library(tidyverse)
+library(dplyr)
+library(ggplot2)
+
+
 diamonds <- read.csv("diamonds.csv")
 str(diamonds)
 
 # Gráfico de dispersión carat vs price
-library(ggplot2)
 scatter_plot <- ggplot(diamonds, aes(x = carat, y = price)) +
   geom_point()
 print(scatter_plot)
@@ -58,6 +62,26 @@ print(facet_plot)
 
 facet_plot_fill <- facet_plot + aes(fill = clarity)
 print(facet_plot_fill)
+
+# Grouping and summarizing
+
+# 1
+media_dimension_diamond <- diamonds %>%
+  group_by(cut) %>%
+  summarize(mediaX = mean(x), mediaY = mean(y), mediaZ = mean(z))
+print(media_dimension_diamond)
+
+# 2 Min y Max
+cut_premium <- diamonds %>%
+  filter(cut == "Premium") %>%
+  group_by(clarity) %>%
+  summarize(minPrice = min(price), maxPrice = max(price))
+print(cut_premium)
+
+# 3
+bar_plot_premium <- ggplot(cut_premium, aes(x = clarity, y = maxPrice, fill = clarity)) +
+  geom_bar(stat = "identity")
+print(bar_plot_premium)
 
 
 
