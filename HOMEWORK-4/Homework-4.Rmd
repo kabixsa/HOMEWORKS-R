@@ -41,6 +41,7 @@ print(boxplot_plot)
 boxplot_color <- boxplot_plot + aes(fill = cut)
 print(boxplot_color)
 
+#Paso 4
 
 filtered_price <- diamonds %>%
   filter(price > 1000 & cut %in% c("Good", "Ideal", "Premium"))
