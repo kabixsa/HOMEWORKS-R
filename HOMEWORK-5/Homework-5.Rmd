@@ -1,0 +1,51 @@
+---
+title: "Homework - 5"
+output: html_notebook
+---
+
+This is an [R Markdown](http://rmarkdown.rstudio.com) Notebook. When you execute code within the notebook, the results appear beneath the code. 
+
+Try executing this chunk by clicking the *Run* button within the chunk or by placing your cursor inside it and pressing *Ctrl+Shift+Enter*. 
+
+```{r}
+#Karen Bibiana Ixcoy Sanchez
+library(tidyverse)
+library(dplyr)
+
+# Cargar los conjuntos de datos
+questions <- read.csv("questions.csv")
+answers <- read.csv("answers.csv")
+tags <- read.csv("tags.csv")
+question_tags <- read.csv("question_tags.csv")
+
+# 1. Left-joining questions and tags
+questions_with_tags <- left_join(questions, question_tags, by = c("id" = "question_id"))
+questions_with_tags <- left_join(questions_with_tags, tags, by = c("tag_id" = "id"))
+questions_with_tags$tag_name <- replace_na(questions_with_tags$tag_name, "only-r")
+
+# 2. Comparing scores across tags
+tag_scores <- questions_with_tags %>%
+  group_by(tag_name) %>%
+  summarize(mean_score = mean(score)) %>%
+  arrange(desc(mean_score))
+
+# 3. Finding gaps between questions and answers
+joined_data <- inner_join(questions, answers, by = c("id" = "question_id"), suffix = c("_question", "_answer"))
+joined_data <- joined_data %>% mutate(gap = creation_date_answer - creation_date_question)
+
+# 4. Joining question and answer counts
+answer_counts <- answers %>%
+  count(question_id) %>%
+  arrange(question_id)
+
+question_answer_counts <- left_join(questions, answer_counts, by = c("id" = "question_id"))
+question_answer_counts$n <- replace_na(question_answer_counts$n, 0)
+
+# 5. Joining questions, answers, and tags
+combined_data <- inner_join(question_tags, question_answer_counts, by = "question_id")
+combined_data <- inner_join(combined_data, tags, by = "tag_id")
+
+
+```
+
+
