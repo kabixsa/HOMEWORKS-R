@@ -30,8 +30,14 @@ tag_scores <- questions_with_tags %>%
   arrange(desc(mean_score))
 
 # 3. Finding gaps between questions and answers
-joined_data <- inner_join(questions, answers, by = c("id" = "question_id"), suffix = c("_question", "_answer"))
+#joined_data <- inner_join(questions, answers, by = c("id" = "question_id"), suffix = c("_question", "_answer"))
+#joined_data <- joined_data %>% mutate(gap = creation_date_answer - creation_date_question)
+
+joined_data$creation_date_answer <- as.numeric(joined_data$creation_date_answer)
+joined_data$creation_date_question <- as.numeric(joined_data$creation_date_question)
+
 joined_data <- joined_data %>% mutate(gap = creation_date_answer - creation_date_question)
+
 
 # 4. Joining question and answer counts
 answer_counts <- answers %>%
