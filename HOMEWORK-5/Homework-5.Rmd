@@ -10,24 +10,25 @@ output: html_notebook
 library(tidyverse)
 library(dplyr)
 
-# Cargando los conjuntos de datos
+#Cargando los datos
 questions <- read.csv("questions.csv")
 answers <- read.csv("answers.csv")
 tags <- read.csv("tags.csv")
 question_tags <- read.csv("question_tags.csv")
 
-# Paso 1. Left-joining questions and tags
+# Paso 1. 
 questions_with_tags <- left_join(questions, question_tags, by = c("id" = "question_id"))
 questions_with_tags <- left_join(questions_with_tags, tags, by = c("tag_id" = "id"))
 questions_with_tags$tag_name <- replace_na(questions_with_tags$tag_name, "only-r")
 
-# Paso 2. Comparing scores across tags
+# Paso 2. 
 tag_scores <- questions_with_tags %>%
   group_by(tag_name) %>%
   summarize(mean_score = mean(score)) %>%
   arrange(desc(mean_score))
 
-# Paso 3. Finding gaps between questions and answers
+# Paso 3. Encontrando gaps between questions and answers
+
 #joined_data <- inner_join(questions, answers, by = c("id" = "question_id"), suffix = c("_question", "_answer"))
 #joined_data <- joined_data %>% mutate(gap = creation_date_answer - creation_date_question)
 
@@ -37,7 +38,7 @@ joined_data$creation_date_question <- as.numeric(joined_data$creation_date_quest
 joined_data <- joined_data %>% mutate(gap = creation_date_answer - creation_date_question)
 
 
-#Paso 4. Joining question and answer counts
+#Paso 4. Uniendo question and answer counts
 answer_counts <- answers %>%
   count(question_id) %>%
   arrange(question_id)
@@ -46,13 +47,15 @@ question_answer_counts <- left_join(questions, answer_counts, by = c("id" = "que
 question_answer_counts$n <- replace_na(question_answer_counts$n, 0)
 print(question_answer_counts)
 
-#Paso 5. Joining questions, answers, and tags
+#Paso 5. Uniendo questions, answers, and tags
 question_tags <- rename(question_tags, id = question_id)
 
 
 combined_data <- inner_join(question_tags, question_answer_counts, by = "question_id")
 
 combined_data <- inner_join(combined_data, tags, by = "id")
+
+
 
 
 
